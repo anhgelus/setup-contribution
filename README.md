@@ -49,5 +49,5 @@ for the option `CodeOfConduct` inside `Root`.
 
 ## Technologies
 
-- Go 1.20
+- Go 1.19
 - pelletier/go-toml v2
