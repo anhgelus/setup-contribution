@@ -22,6 +22,12 @@ func main() {
 	if len(os.Args) > 1 {
 		toUse = os.Args[1]
 	}
+	for _, dis := range conf.DisabledFolders {
+		if toUse == dis {
+			println("This folder is disabled")
+			return
+		}
+	}
 	errPanic(src.Copy(conf, toUse))
 }
 
