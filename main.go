@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"github.com/anhgelus/setup-contribution/src"
 	"github.com/anhgelus/setup-contribution/src/config"
 	"github.com/pelletier/go-toml/v2"
@@ -8,6 +9,9 @@ import (
 	"os/user"
 	"path/filepath"
 )
+
+//go:embed example/config.toml
+var c string
 
 func main() {
 	u, err := user.Current()
@@ -20,6 +24,10 @@ func main() {
 	errPanic(toml.Unmarshal(a, &conf))
 	toUse := "default"
 	if len(os.Args) > 1 {
+		if os.Args[1] == "install" {
+			src.Install(home, c)
+			return
+		}
 		toUse = os.Args[1]
 	}
 	for _, dis := range conf.DisabledFolders {

@@ -10,8 +10,13 @@ import (
 func Copy(conf config.Config, folder string) error {
 	basePath := filepath.Join(config.Datas, folder)
 
+	err := os.MkdirAll(".github/ISSUE_TEMPLATE", 0764)
+	if err != nil {
+		return err
+	}
+
 	// Root
-	err := mdCopy(basePath, "CODE_OF_CONDUCT", conf.Root.CodeOfConduct)
+	err = mdCopy(basePath, "CODE_OF_CONDUCT", conf.Root.CodeOfConduct)
 	if err != nil {
 		return err
 	}
@@ -27,7 +32,7 @@ func Copy(conf config.Config, folder string) error {
 	}
 
 	// .github
-	err = mdCopy(basePath, ".github/CODEOWNERS", conf.Github.CodeOwners)
+	err = sCopy(basePath, ".github/CODEOWNERS", conf.Github.CodeOwners, "")
 	if err != nil {
 		return err
 	}
