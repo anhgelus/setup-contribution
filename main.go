@@ -39,7 +39,7 @@ func main() {
 			return
 		}
 	}
-	errPanic(src.Copy(conf, toUse))
+	errPanic(src.Copy(conf, home, toUse))
 }
 
 func errPanic(err error) {

@@ -1,4 +1,4 @@
-DisabledFolders = ["hello"]
+DisabledFolders = [""]
 
 [Root]
 CodeOfConduct = "CODE_OF_CONDUCT"

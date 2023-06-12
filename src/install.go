@@ -17,14 +17,14 @@ func Install(home string, baseConf string) error {
 		return err
 	}
 
-	err = os.WriteFile(filepath.Join(base, "config.toml"), []byte(baseConf), 0666)
+	err = os.WriteFile(filepath.Join(home, config.Datas, "config.toml"), []byte(baseConf), 0666)
 	if err != nil {
 		return err
 	}
 
 	files := []string{"CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "SECURITY.md", "CODEOWNERS",
-		"templates/pull_request_template", "templates/bug_report", "templates/feature_request", "templates/other_issues",
-		"templates/config.yml"}
+		"templates/pull_request_template.md", "templates/bug_report.md", "templates/feature_request.md",
+		"templates/other_issues.md", "templates/config.yml"}
 	for _, f := range files {
 		err := create(base, f)
 		if err != nil {
