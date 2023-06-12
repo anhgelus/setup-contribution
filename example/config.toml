@@ -1,0 +1,16 @@
+DisabledFolders = ["hello"]
+
+[Root]
+CodeOfConduct = "CODE_OF_CONDUCT"
+Contributing = "CONTRIBUTING"
+SecurityPolicy = "SECURITY"
+
+[Github]
+CodeOwners = "CODEOWNERS"
+PullRequestTemplate = "templates/pull_request_template"
+
+[Github.Templates]
+BugReport = "templates/bug_report"
+FeatureRequest = "templates/feature_request"
+OtherIssues = "templates/other_issues"
+Config = "templates/config"
