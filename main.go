@@ -17,19 +17,22 @@ func main() {
 	u, err := user.Current()
 	errPanic(err)
 	home := u.HomeDir
+	toUse := "default"
+	if len(os.Args) > 1 {
+		if os.Args[1] == "install" {
+			err := src.Install(home, c)
+			if err != nil {
+				panic(err)
+			}
+			return
+		}
+		toUse = os.Args[1]
+	}
 	var conf config.Config
 	path := filepath.Join(home, config.Datas+"config.toml")
 	a, err := os.ReadFile(path)
 	errPanic(err)
 	errPanic(toml.Unmarshal(a, &conf))
-	toUse := "default"
-	if len(os.Args) > 1 {
-		if os.Args[1] == "install" {
-			src.Install(home, c)
-			return
-		}
-		toUse = os.Args[1]
-	}
 	for _, dis := range conf.DisabledFolders {
 		if toUse == dis {
 			println("This folder is disabled")
