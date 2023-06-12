@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 )
 
-func Copy(conf config.Config, folder string) error {
-	basePath := filepath.Join(config.Datas, folder)
+func Copy(conf config.Config, home string, folder string) error {
+	basePath := filepath.Join(home, config.Datas, folder)
 
 	err := os.MkdirAll(".github/ISSUE_TEMPLATE", 0764)
 	if err != nil {
@@ -26,7 +26,7 @@ func Copy(conf config.Config, folder string) error {
 		return err
 	}
 
-	err = mdCopy(basePath, "SECURITY_POLICY", conf.Root.SecurityPolicy)
+	err = mdCopy(basePath, "SECURITY", conf.Root.SecurityPolicy)
 	if err != nil {
 		return err
 	}
@@ -75,10 +75,24 @@ func ymlCopy(basePath string, name string, value string) error {
 }
 
 func sCopy(basePath string, name string, value string, ext string) error {
-	fmt.Printf("Copying %s", name)
-	c, err := os.ReadFile(fmt.Sprintf("%s%s.%s", basePath, value, ext))
+	fmt.Printf("Copying %s\n", name)
+	var c []byte
+	var err error
+	no := ext == ""
+	if no {
+		c, err = os.ReadFile(fmt.Sprintf("%s/%s", basePath, value))
+	} else {
+		c, err = os.ReadFile(fmt.Sprintf("%s/%s.%s", basePath, value, ext))
+	}
 	if err != nil {
 		return err
+	}
+	if no {
+		err = os.WriteFile(name, c, 0666)
+		if err != nil {
+			return err
+		}
+		return nil
 	}
 	err = os.WriteFile(fmt.Sprintf("%s.%s", name, ext), c, 0666)
 	if err != nil {
